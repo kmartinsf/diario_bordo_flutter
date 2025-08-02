@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^6.0.0
   firebase_storage: ^13.0.0
   flutter_dotenv: ^5.2.1
+  flutter_svg: ^2.2.0
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:
