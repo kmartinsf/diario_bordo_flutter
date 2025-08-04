@@ -13,11 +13,11 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: BoardingDiaryApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BoardingDiaryApp extends StatelessWidget {
+  const BoardingDiaryApp({super.key});
 
   @override
   Widget build(BuildContext context) {
