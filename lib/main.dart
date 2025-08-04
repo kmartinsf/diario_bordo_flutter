@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/presentation/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,7 @@ class BoardingDiaryApp extends StatelessWidget {
       routes: {
         '/login': (_) => const LoginScreen(),
         '/register': (_) => const RegisterScreen(),
+        '/home': (_) => const HomeScreen(),
       },
     );
   }
