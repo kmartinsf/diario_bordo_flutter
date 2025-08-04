@@ -15,10 +15,14 @@ class AuthService {
       password: password,
     );
 
-    await _firestore.collection('users').doc(result.user!.uid).set({
-      'name': name,
-      'email': email,
-      'createdAt': Timestamp.now(),
-    });
+    try {
+      await _firestore.collection('users').doc(result.user!.uid).set({
+        'name': name,
+        'email': email,
+        'createdAt': Timestamp.now(),
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 }
