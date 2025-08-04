@@ -25,4 +25,8 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<void> login({required String email, required String password}) async {
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+  }
 }
