@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:diario_bordo_flutter/data/services/firebase/auth_service.dart';
+import 'package:diario_bordo_flutter/data/services/auth_providers.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +22,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
 
-  final authServiceProvider = Provider<AuthService>((ref) => AuthService());
-
   bool isLoading = false;
 
   void _register() async {
@@ -41,10 +39,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
       if (mounted) {
         log('Conta criada com sucesso!');
-        Navigator.pushReplacementNamed(
-          context,
-          '/login',
-        );
+        Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {
       if (mounted) {
@@ -55,7 +50,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         );
       }
     } finally {
-      if (mounted) setState(() => isLoading = false);
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
     }
   }
 
