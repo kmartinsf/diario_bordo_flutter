@@ -98,7 +98,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   child: SvgPicture.asset(
                     'assets/images/rumo.svg',
                     width: 115,
-                    color: Colors.white,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
                 Positioned(
