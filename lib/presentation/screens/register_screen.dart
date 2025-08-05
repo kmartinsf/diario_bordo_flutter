@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:diario_bordo_flutter/providers/auth_providers.dart';
+import 'package:diario_bordo_flutter/providers/auth_provider.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

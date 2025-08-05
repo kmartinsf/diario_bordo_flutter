@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Diary {
+class TravelJournal {
   final String id;
   final String location;
   final String title;
@@ -9,7 +9,7 @@ class Diary {
   final String? coverUrl;
   final Timestamp createdAt;
 
-  Diary({
+  TravelJournal({
     required this.id,
     required this.location,
     required this.title,
@@ -19,9 +19,9 @@ class Diary {
     this.coverUrl,
   });
 
-  factory Diary.fromFirestore(DocumentSnapshot doc) {
+  factory TravelJournal.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-    return Diary(
+    return TravelJournal(
       id: doc.id,
       location: data['location'],
       title: data['title'],
