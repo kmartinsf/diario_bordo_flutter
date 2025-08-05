@@ -1,5 +1,5 @@
-import 'package:diario_bordo_flutter/data/services/auth_providers.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/input.dart';
+import 'package:diario_bordo_flutter/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
