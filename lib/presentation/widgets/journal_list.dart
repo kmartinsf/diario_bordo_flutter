@@ -1,5 +1,6 @@
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
-import 'package:diario_bordo_flutter/presentation/widgets/journal_list_title.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/details_modal.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/journal_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -43,7 +44,11 @@ class JournalList extends StatelessWidget {
               separatorBuilder: (_, __) => const Gap(12),
               itemBuilder: (context, index) {
                 final journal = journals[index];
-                return JournalListTile(journal: journal, onRefresh: onRefresh);
+                return JournalListTile(
+                  journal: journal,
+                  onRefresh: onRefresh,
+                  onTap: () => detailsModal(context, journal),
+                );
               },
             ),
           );

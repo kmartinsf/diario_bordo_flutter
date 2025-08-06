@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class JournalListTile extends StatelessWidget {
   final TravelJournal journal;
   final VoidCallback onRefresh;
+  final VoidCallback onTap;
 
   const JournalListTile({
     super.key,
     required this.journal,
     required this.onRefresh,
+    required this.onTap,
   });
 
   @override
@@ -20,6 +22,7 @@ class JournalListTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
+        onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 10,
