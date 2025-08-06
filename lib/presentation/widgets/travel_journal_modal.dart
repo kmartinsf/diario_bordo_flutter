@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_input_with_icon.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/snackbar.dart';
 import 'package:diario_bordo_flutter/providers/location_provider.dart';
 import 'package:diario_bordo_flutter/providers/travel_journal_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,63 +13,47 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class NewTravelJournalModal extends ConsumerStatefulWidget {
-  const NewTravelJournalModal({super.key});
+class TravelJournalModal extends ConsumerStatefulWidget {
+  final TravelJournal? journal;
+  final VoidCallback onSuccess;
+
+  const TravelJournalModal({super.key, this.journal, required this.onSuccess});
 
   @override
-  ConsumerState<NewTravelJournalModal> createState() =>
-      _NewTravelJournalModalState();
+  ConsumerState<TravelJournalModal> createState() => _TravelJournalModalState();
 }
 
-class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
+class _TravelJournalModalState extends ConsumerState<TravelJournalModal> {
   final _formKey = GlobalKey<FormState>();
   final _location = TextEditingController();
   final _title = TextEditingController();
   final _description = TextEditingController();
+
   double _rating = 0;
   File? _coverImage;
   bool _isLoading = false;
   List<String> _suggestions = [];
   Timer? _debounceTimer;
 
+  bool get isEditing => widget.journal != null;
+
+  @override
+  void initState() {
+    super.initState();
+    final journal = widget.journal;
+    if (journal != null) {
+      _location.text = journal.location;
+      _title.text = journal.title;
+      _description.text = journal.description;
+      _rating = journal.rating;
+    }
+  }
+
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
       setState(() => _coverImage = File(picked.path));
-    }
-  }
-
-  Future<void> _createJournal() async {
-    if (!_formKey.currentState!.validate()) return;
-    setState(() => _isLoading = true);
-
-    final journal = TravelJournal(
-      id: '',
-      location: _location.text.trim(),
-      title: _title.text.trim(),
-      description: _description.text.trim(),
-      rating: _rating,
-      createdAt: Timestamp.now(),
-      coverUrl: null,
-    );
-
-    try {
-      await ref
-          .read(travelJournalRepositoryProvider)
-          .addJournal(journal, imageFile: _coverImage);
-      if (!mounted) return;
-      Navigator.pop(context);
-    } catch (_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erro ao criar diário'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -83,19 +68,53 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
         if (mounted) setState(() => _suggestions = results);
       } catch (_) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Erro ao buscar localização'),
-              backgroundColor: Colors.red,
-            ),
-          );
+          customSnackBar(context, 'Erro ao buscar localização', isError: true);
         }
       }
     });
   }
 
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isLoading = true);
+
+    final repository = ref.read(travelJournalRepositoryProvider);
+    final isEdit = isEditing;
+    final journal = TravelJournal(
+      id: isEdit ? widget.journal!.id : '',
+      location: _location.text.trim(),
+      title: _title.text.trim(),
+      description: _description.text.trim(),
+      rating: _rating,
+      createdAt: isEdit ? widget.journal!.createdAt : Timestamp.now(),
+      coverUrl: isEdit ? widget.journal!.coverUrl : null,
+    );
+
+    try {
+      if (isEdit) {
+        await repository.updateJournal(journal, newImage: _coverImage);
+        if (!mounted) return;
+        Navigator.pop(context);
+        customSnackBar(context, 'Diário alterado');
+      } else {
+        await repository.addJournal(journal, imageFile: _coverImage);
+        if (!mounted) return;
+        Navigator.pop(context);
+        customSnackBar(context, 'Diário criado');
+      }
+      widget.onSuccess();
+    } catch (_) {
+      if (mounted) customSnackBar(context, 'Algo deu errado', isError: true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   void dispose() {
+    _location.dispose();
+    _title.dispose();
+    _description.dispose();
     _debounceTimer?.cancel();
     super.dispose();
   }
@@ -118,10 +137,10 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          'Novo diário',
-                          style: TextStyle(
+                          isEditing ? 'Editar diário' : 'Novo diário',
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
                             color: Colors.black,
@@ -151,6 +170,11 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                         width: double.infinity,
                         child: _coverImage != null
                             ? Image.file(_coverImage!, fit: BoxFit.cover)
+                            : widget.journal?.coverUrl != null
+                            ? Image.network(
+                                widget.journal!.coverUrl!,
+                                fit: BoxFit.cover,
+                              )
                             : const DecoratedBox(
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
@@ -189,7 +213,6 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                           ),
                         ),
                       ),
-
                       Positioned(
                         top: 120,
                         left: 0,
@@ -216,7 +239,9 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                                       borderRadius: BorderRadius.circular(12),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.1),
+                                          color: Colors.black.withValues(
+                                            alpha: 0.1,
+                                          ),
                                           blurRadius: 6,
                                           offset: const Offset(0, 2),
                                         ),
@@ -225,17 +250,19 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                                     child: ListView(
                                       shrinkWrap: true,
                                       padding: EdgeInsets.zero,
-                                      children: _suggestions.map((s) {
-                                        return ListTile(
-                                          title: Text(s),
-                                          onTap: () {
-                                            setState(() {
-                                              _location.text = s;
-                                              _suggestions.clear();
-                                            });
-                                          },
-                                        );
-                                      }).toList(),
+                                      children: _suggestions
+                                          .map(
+                                            (s) => ListTile(
+                                              title: Text(s),
+                                              onTap: () {
+                                                setState(() {
+                                                  _location.text = s;
+                                                  _suggestions.clear();
+                                                });
+                                              },
+                                            ),
+                                          )
+                                          .toList(),
                                     ),
                                   ),
                                 const Gap(16),
@@ -271,7 +298,7 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Nota para a viagem',
                                         style: TextStyle(fontSize: 16),
                                       ),
@@ -286,16 +313,15 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                                           itemSize: 32,
                                           itemPadding:
                                               const EdgeInsets.symmetric(
-                                                horizontal: 2.0,
+                                                horizontal: 2,
                                               ),
                                           itemBuilder: (context, _) =>
                                               const Icon(
                                                 Icons.star,
                                                 color: Colors.amber,
                                               ),
-                                          onRatingUpdate: (rating) {
-                                            setState(() => _rating = rating);
-                                          },
+                                          onRatingUpdate: (rating) =>
+                                              setState(() => _rating = rating),
                                         ),
                                       ),
                                     ],
@@ -305,9 +331,7 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(
-                                    onPressed: _isLoading
-                                        ? null
-                                        : _createJournal,
+                                    onPressed: _isLoading ? null : _submit,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF4E61F6),
                                       padding: const EdgeInsets.symmetric(
@@ -323,9 +347,11 @@ class _NewTravelJournalModalState extends ConsumerState<NewTravelJournalModal> {
                                               Colors.white,
                                             ),
                                           )
-                                        : const Text(
-                                            'Salvar diário',
-                                            style: TextStyle(
+                                        : Text(
+                                            isEditing
+                                                ? 'Salvar mudanças'
+                                                : 'Salvar diário',
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
                                               color: Colors.white,

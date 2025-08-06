@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/delete_journal_modal.dart';
-import 'package:diario_bordo_flutter/presentation/widgets/new_travel_journal_modal.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/travel_journal_modal.dart';
 import 'package:diario_bordo_flutter/providers/travel_journal_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,13 +42,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-          child: const NewTravelJournalModal(),
-        );
-      },
+      builder: (context) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+        child: TravelJournalModal(onSuccess: _refresh),
+      ),
     );
+
     _refresh();
   }
 
@@ -172,6 +171,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               child: PopupMenuButton<String>(
                                 onSelected: (value) async {
                                   if (value == 'edit') {
+                                    await showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      useSafeArea: true,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor: Colors.black.withValues(
+                                        alpha: 0.5,
+                                      ),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                      builder: (context) => BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 3,
+                                          sigmaY: 3,
+                                        ),
+                                        child: TravelJournalModal(
+                                          journal: journal,
+                                          onSuccess: _refresh,
+                                        ),
+                                      ),
+                                    );
                                   } else if (value == 'delete') {
                                     await deleteConfirmation(
                                       context,
