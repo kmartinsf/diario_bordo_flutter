@@ -1,7 +1,8 @@
 import 'dart:developer';
 
+import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/custom_input.dart';
 import 'package:diario_bordo_flutter/providers/auth_provider.dart';
-import 'package:diario_bordo_flutter/presentation/widgets/input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,172 +84,172 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF4E61F6),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: topHeight,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 56,
-                    left: 24,
-                    child: SvgPicture.asset(
-                      'assets/images/rumo.svg',
-                      width: 115,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
-                      ),
+      resizeToAvoidBottomInset: true,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: topHeight,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 56,
+                  left: 24,
+                  child: SvgPicture.asset(
+                    'assets/images/rumo.svg',
+                    width: 115,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
                     ),
                   ),
-                  Positioned(
-                    top: topHeight * 0.63,
-                    left: 24,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.chevron_left,
-                          color: Color(0xFF383838),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: -150,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Image.asset(
-                        'assets/images/register.png',
-                        height: media.height * 0.52,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.bottomRight,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: formTopHeight,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Cadastre-se',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                Positioned(
+                  top: topHeight * 0.63,
+                  left: 24,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.chevron_left,
+                        color: Color(0xFF383838),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: -150,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Image.asset(
+                      'assets/images/register.png',
+                      height: media.height * 0.52,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.bottomRight,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: formTopHeight,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Cadastre-se',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const Gap(8),
-                        const Text(
-                          'Preencha os dados abaixo para criar sua conta.',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        const Gap(24),
-                        CustomInput(
-                          hint: 'Nome',
-                          controller: _name,
-                          validator: (value) => value == null || value.isEmpty
-                              ? 'Informe seu nome'
-                              : null,
-                        ),
-                        const Gap(16),
-                        CustomInput(
-                          hint: 'E-mail',
-                          controller: _email,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Informe o e-mail';
-                            }
-                            final emailRegex = RegExp(
-                              r'^[\w\.-]+@[\w\.-]+\.\w+$',
-                            );
-                            if (!emailRegex.hasMatch(value)) {
-                              return 'E-mail inválido';
-                            }
-                            return null;
-                          },
-                        ),
-                        const Gap(16),
-                        CustomInput(
-                          hint: 'Senha',
-                          obscure: true,
-                          controller: _password,
-                          validator: (value) {
-                            if (value == null || value.length < 6) {
-                              return 'A senha deve ter pelo menos 6 caracteres';
-                            }
-                            return null;
-                          },
-                        ),
-                        const Gap(16),
-                        CustomInput(
-                          hint: 'Confirmar senha',
-                          obscure: true,
-                          controller: _confirmPassword,
-                          validator: (value) => value != _password.text
-                              ? 'As senhas não coincidem'
-                              : null,
-                        ),
-                        const Gap(24),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: isLoading ? null : _register,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF4E61F6),
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                      ),
+                      const Gap(8),
+                      const Text(
+                        'Preencha os dados abaixo para criar sua conta.',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      const Gap(24),
+                      CustomInput(
+                        hint: 'Nome',
+                        controller: _name,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Informe seu nome'
+                            : null,
+                      ),
+                      const Gap(16),
+                      CustomInput(
+                        hint: 'E-mail',
+                        controller: _email,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Informe o e-mail';
+                          }
+                          final emailRegex = RegExp(
+                            r'^[\w\.-]+@[\w\.-]+\.\w+$',
+                          );
+                          if (!emailRegex.hasMatch(value)) {
+                            return 'E-mail inválido';
+                          }
+                          return null;
+                        },
+                      ),
+                      const Gap(16),
+                      CustomInput(
+                        hint: 'Senha',
+                        obscure: true,
+                        controller: _password,
+                        validator: (value) {
+                          if (value == null || value.length < 6) {
+                            return 'A senha deve ter pelo menos 6 caracteres';
+                          }
+                          return null;
+                        },
+                      ),
+                      const Gap(16),
+                      CustomInput(
+                        hint: 'Confirmar senha',
+                        obscure: true,
+                        controller: _confirmPassword,
+                        validator: (value) => value != _password.text
+                            ? 'As senhas não coincidem'
+                            : null,
+                      ),
+                      const Gap(24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomButton(
+                          onPressed: isLoading ? null : _register,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4E61F6),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: isLoading
-                                ? const CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation(
-                                      Colors.white,
-                                    ),
-                                  )
-                                : const Text(
-                                    'Criar conta',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),
                           ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(
+                                    Colors.white,
+                                  ),
+                                )
+                              : const Text(
+                                  'Criar conta',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
