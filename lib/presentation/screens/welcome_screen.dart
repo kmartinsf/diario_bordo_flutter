@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -20,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton(
+                  CustomButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/register');
                     },
@@ -44,7 +45,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   Gap(12),
-                  ElevatedButton(
+                  CustomButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     },
