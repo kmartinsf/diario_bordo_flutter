@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class HomeBottomNavBar extends StatelessWidget {
   final VoidCallback onAdd;
@@ -28,7 +29,7 @@ class HomeBottomNavBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(Icons.menu_book, color: Color(0xFF4E61F6)),
-                  SizedBox(height: 4),
+                  Gap(4),
                   Text(
                     'Diários',
                     style: TextStyle(
@@ -57,12 +58,12 @@ class HomeBottomNavBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(Icons.person_outline, color: Colors.grey),
-                  SizedBox(height: 4),
+                  Gap(4),
                   Text(
                     'Perfil',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF4E61F6),
+                      color: Color(0x8A000000),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
