@@ -17,17 +17,8 @@ class TravelJournalRepository {
 
   Future<void> addJournal(TravelJournal journal, {File? imageFile}) async {
     final docRef = _journals.doc();
-    String? imageUrl;
 
     try {
-      if (imageFile != null) {
-        final ref = _storage.ref(
-          'users/${_auth.currentUser!.uid}/journals/${docRef.id}.jpg',
-        );
-        await ref.putFile(imageFile);
-        imageUrl = await ref.getDownloadURL();
-      }
-
       await docRef.set({
         'id': docRef.id,
         'location': journal.location,
@@ -35,8 +26,18 @@ class TravelJournalRepository {
         'description': journal.description,
         'rating': journal.rating,
         'createdAt': Timestamp.now(),
-        'coverUrl': imageUrl,
+        'coverUrl': null,
       });
+
+      if (imageFile != null) {
+        final ref = _storage.ref(
+          'users/${_auth.currentUser!.uid}/journals/${docRef.id}.jpg',
+        );
+        await ref.putFile(imageFile);
+        final imageUrl = await ref.getDownloadURL();
+
+        await docRef.update({'coverUrl': imageUrl});
+      }
     } catch (e) {
       throw Exception('Erro ao criar diário: $e');
     }
