@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/delete_journal_modal.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/new_travel_journal_modal.dart';
 import 'package:diario_bordo_flutter/providers/travel_journal_provider.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFFFFFF),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,10 +170,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             trailing: Material(
                               type: MaterialType.transparency,
                               child: PopupMenuButton<String>(
-                                onSelected: (value) {
+                                onSelected: (value) async {
                                   if (value == 'edit') {
-                                  } else if (value == 'delete') {}
+                                  } else if (value == 'delete') {
+                                    await deleteConfirmation(
+                                      context,
+                                      journalId: journal.id,
+                                      onDeleteSuccess: _refresh,
+                                    );
+                                  }
                                 },
+
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
