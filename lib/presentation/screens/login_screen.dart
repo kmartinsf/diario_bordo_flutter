@@ -1,4 +1,5 @@
-import 'package:diario_bordo_flutter/presentation/widgets/input.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/custom_input.dart';
 import 'package:diario_bordo_flutter/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,6 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF4E61F6),
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Positioned(
@@ -72,7 +74,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.060,
+            top: MediaQuery.of(context).size.height * 0.048,
             right: 0,
             left: 170,
             child: Center(
@@ -101,121 +103,134 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             right: 0,
             bottom: 0,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Bem vindo (a) de volta!',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const Gap(8),
-                  const Text(
-                    'Preencha com seus dados.',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  const Gap(24),
-
-                  Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          CustomInput(
-                            hint: 'Email',
-                            errorText: _loginError,
-                            controller: _email,
-                            hasLoginError: _loginError != null,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Informe o e-mail';
-                              }
-                              final emailRegex = RegExp(
-                                r'^[\w\.-]+@[\w\.-]+\.\w+$',
-                              );
-                              if (!emailRegex.hasMatch(value)) {
-                                return 'E-mail inválido';
-                              }
-                              return null;
-                            },
-                          ),
-
-                          const Gap(16),
-                          CustomInput(
-                            hint: 'Senha',
-                            obscure: !_showPassword,
-                            controller: _password,
-                            hasLoginError: _loginError != null,
-                            errorText: _loginError,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _showPassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () => setState(
-                                () => _showPassword = !_showPassword,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Informe a senha';
-                              }
-                              return null;
-                            },
-                          ),
-
-                          const Gap(24),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: isLoading ? null : _login,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4E61F6),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation(
-                                        Colors.white,
-                                      ),
-                                    )
-                                  : const Text(
-                                      'Entrar',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                          const Gap(12),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Esqueci minha senha',
-                              style: TextStyle(
-                                fontSize: 14,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ],
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(
+                  24,
+                  32,
+                  24,
+                  MediaQuery.of(context).viewInsets.bottom + 24,
+                ),
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Bem vindo (a) de volta!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                    const Gap(8),
+                    const Text(
+                      'Preencha com seus dados.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const Gap(24),
+
+                    Form(
+                      key: _formKey,
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            CustomInput(
+                              hint: 'Email',
+                              errorText: _loginError,
+                              controller: _email,
+                              hasLoginError: _loginError != null,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Informe o e-mail';
+                                }
+                                final emailRegex = RegExp(
+                                  r'^[\w\.-]+@[\w\.-]+\.\w+$',
+                                );
+                                if (!emailRegex.hasMatch(value)) {
+                                  return 'E-mail inválido';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            const Gap(16),
+                            CustomInput(
+                              hint: 'Senha',
+                              obscure: !_showPassword,
+                              controller: _password,
+                              hasLoginError: _loginError != null,
+                              errorText: _loginError,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _showPassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () => setState(
+                                  () => _showPassword = !_showPassword,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Informe a senha';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            const Gap(24),
+                            SizedBox(
+                              width: double.infinity,
+                              child: CustomButton(
+                                onPressed: isLoading ? null : _login,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF4E61F6),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: isLoading
+                                    ? const CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                          Colors.white,
+                                        ),
+                                      )
+                                    : const Text(
+                                        'Entrar',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                            const Gap(12),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Esqueci minha senha',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
