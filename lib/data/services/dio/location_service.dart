@@ -29,7 +29,7 @@ class LocationService {
           .cast<String>()
           .toList();
     } catch (e) {
-      rethrow;
+      throw Exception('Erro ao buscar cidades: $e');
     }
   }
 }

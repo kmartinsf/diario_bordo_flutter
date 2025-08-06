@@ -22,7 +22,7 @@ class AuthService {
         'createdAt': Timestamp.now(),
       });
     } catch (e) {
-      rethrow;
+      throw Exception('Erro ao criar usuário: $e');
     }
   }
 
