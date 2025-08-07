@@ -118,6 +118,7 @@ class _TravelFormState extends ConsumerState<TravelForm> {
             hintText: 'Resumo da sua viagem',
             icon: Icons.notes,
             maxLines: 4,
+            maxCharacterLength: 200,
             validator: (v) =>
                 v == null || v.isEmpty ? 'Informe o resumo' : null,
           ),
