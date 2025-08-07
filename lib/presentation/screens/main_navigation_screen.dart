@@ -90,18 +90,15 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: GestureDetector(
-                  onTap: _openNewJournalModal,
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primaryLight,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.add, color: AppColors.primary),
+              GestureDetector(
+                onTap: _openNewJournalModal,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: const BoxDecoration(
+                    color: AppColors.primaryLight,
+                    shape: BoxShape.circle,
                   ),
+                  child: const Icon(Icons.add, color: AppColors.primary),
                 ),
               ),
               GestureDetector(
