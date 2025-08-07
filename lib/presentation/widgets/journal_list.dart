@@ -1,44 +1,31 @@
-import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/details_modal.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/journal_list_tile.dart';
+import 'package:diario_bordo_flutter/providers/travel_journal_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class JournalList extends StatelessWidget {
-  final Future<List<TravelJournal>> journalsFuture;
-  final Future<void> Function() onRefresh;
-  const JournalList({
-    super.key,
-    required this.onRefresh,
-    required this.journalsFuture,
-  });
+class JournalList extends ConsumerWidget {
+  const JournalList({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: FutureBuilder<List<TravelJournal>>(
-        future: journalsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return const Center(child: Text('Erro ao carregar diários'));
-          }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final journalsAsync = ref.watch(travelJournalNotifierProvider);
 
-          final journals = snapshot.data ?? [];
+    return Expanded(
+      child: journalsAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => const Center(child: Text('Erro ao carregar diários')),
+        data: (journals) {
           if (journals.isEmpty) {
-            return const Center(
-              child: Text(
-                'Nenhum diário criado ainda.',
-                style: TextStyle(fontSize: 16),
-              ),
-            );
+            return const Center(child: Text('Nenhum diário criado ainda.'));
           }
 
           return RefreshIndicator(
-            onRefresh: onRefresh,
+            onRefresh: () =>
+                ref.read(travelJournalNotifierProvider.notifier).refresh(),
             child: ListView.separated(
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               itemCount: journals.length,
               separatorBuilder: (_, __) => const Gap(12),
@@ -46,7 +33,9 @@ class JournalList extends StatelessWidget {
                 final journal = journals[index];
                 return JournalListTile(
                   journal: journal,
-                  onRefresh: onRefresh,
+                  onRefresh: () => ref
+                      .read(travelJournalNotifierProvider.notifier)
+                      .refresh(),
                   onTap: () => detailsModal(context, journal),
                 );
               },
