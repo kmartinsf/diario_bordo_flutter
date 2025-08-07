@@ -13,7 +13,7 @@ Aplicativo de diário de viagens, onde usuários podem registrar, editar e visua
 
 ### 📦 Baixar o APK
 
-➡️ **[Clique aqui para baixar o APK](https://github.com/kmartinsf/diario_bordo_flutter/releases/download/apk/app-release.apk](https://github.com/kmartinsf/diario_bordo_flutter/releases/tag/apk))**  
+➡️ **[Clique aqui para baixar o APK](https://github.com/kmartinsf/diario_bordo_flutter/releases/tag/apk)**  
 *(Necessário permitir instalações de fontes desconhecidas no seu dispositivo)*
 
 ---
