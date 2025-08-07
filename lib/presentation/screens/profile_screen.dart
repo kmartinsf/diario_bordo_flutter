@@ -87,12 +87,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Erro ao salvar alterações'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        customSnackBar(context, 'Erro ao salvar alterações', isError: true);
       }
     } finally {
       if (mounted) setState(() => _isSaving = false);
@@ -234,5 +229,4 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
     );
   }
-
 }
