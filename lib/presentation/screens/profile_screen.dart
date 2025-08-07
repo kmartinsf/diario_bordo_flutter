@@ -68,6 +68,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future<void> _saveChanges(UserModel currentUser) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     setState(() => _isSaving = true);
     final repo = ref.read(authRepositoryProvider);
     final userId = FirebaseAuth.instance.currentUser!.uid;
