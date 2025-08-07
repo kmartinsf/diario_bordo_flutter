@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 void detailsModal(BuildContext context, TravelJournal journal) {
@@ -15,16 +16,16 @@ void detailsModal(BuildContext context, TravelJournal journal) {
   );
 }
 
-class DetailsModal extends StatefulWidget {
+class DetailsModal extends ConsumerStatefulWidget {
   final TravelJournal journal;
 
   const DetailsModal({super.key, required this.journal});
 
   @override
-  State<DetailsModal> createState() => _DetailsModalState();
+  ConsumerState<DetailsModal> createState() => _DetailsModalState();
 }
 
-class _DetailsModalState extends State<DetailsModal> {
+class _DetailsModalState extends ConsumerState<DetailsModal> {
   String? userName;
 
   @override
@@ -132,20 +133,25 @@ class _DetailsModalState extends State<DetailsModal> {
                   style: const TextStyle(color: AppColors.grey),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'SOBRE A VIAGEM',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                Text(
+                  'Sobre a viagem'.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   widget.journal.description,
                   style: const TextStyle(fontSize: 13),
                   textAlign: TextAlign.justify,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
           const SizedBox(height: 16),
+
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: widget.journal.coverUrl != null
