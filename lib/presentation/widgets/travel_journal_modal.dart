@@ -1,14 +1,15 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/image_selector.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/modal_header.dart';
-import 'package:diario_bordo_flutter/presentation/widgets/snackbar.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/travel_form.dart';
 import 'package:diario_bordo_flutter/providers/travel_journal_provider.dart';
 import 'package:diario_bordo_flutter/utils/image_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,14 +50,27 @@ class _TravelJournalModalState extends ConsumerState<TravelJournalModal> {
     }
   }
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery);
+  bool _isPickingImage = false;
 
-    if (picked != null) {
-      final originalFile = File(picked.path);
-      final compressed = await compressImage(originalFile);
-      setState(() => _coverImage = compressed);
+  Future<void> _pickImage() async {
+    if (_isPickingImage) return;
+
+    _isPickingImage = true;
+    try {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(source: ImageSource.gallery);
+
+      if (picked != null) {
+        final originalFile = File(picked.path);
+        final compressed = await compressImage(originalFile);
+        setState(() => _coverImage = compressed);
+      }
+    } catch (e) {
+      if (mounted) {
+        customSnackBar(context, 'Erro ao escolher imagem', isError: true);
+      }
+    } finally {
+      _isPickingImage = false;
     }
   }
 
@@ -64,30 +78,43 @@ class _TravelJournalModalState extends ConsumerState<TravelJournalModal> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
 
-    final repository = ref.read(travelJournalRepositoryProvider);
+    final service = ref.read(travelJournalServiceProvider);
+    final notifier = ref.read(travelJournalNotifierProvider.notifier);
+    final userId = FirebaseAuth.instance.currentUser!.uid;
     final isEdit = isEditing;
-    final journal = TravelJournal(
-      id: isEdit ? widget.journal!.id : '',
-      location: _location.text.trim(),
-      title: _title.text.trim(),
-      description: _description.text.trim(),
-      rating: _rating,
-      createdAt: isEdit ? widget.journal!.createdAt : Timestamp.now(),
-      coverUrl: isEdit ? widget.journal!.coverUrl : null,
-    );
 
     try {
       if (isEdit) {
-        await repository.updateJournal(journal, newImage: _coverImage);
+        final updated = TravelJournal(
+          id: widget.journal!.id,
+          location: _location.text.trim(),
+          title: _title.text.trim(),
+          description: _description.text.trim(),
+          rating: _rating,
+          createdAt: widget.journal!.createdAt,
+          coverUrl: widget.journal!.coverUrl,
+          userId: userId,
+        );
+
+        await notifier.updateJournal(updated, newImage: _coverImage);
         if (!mounted) return;
         Navigator.pop(context);
         customSnackBar(context, 'Diário alterado');
       } else {
-        await repository.addJournal(journal, imageFile: _coverImage);
+        await service.createJournal(
+          userId: userId,
+          location: _location.text.trim(),
+          title: _title.text.trim(),
+          description: _description.text.trim(),
+          rating: _rating,
+          imageFile: _coverImage,
+        );
         if (!mounted) return;
         Navigator.pop(context);
+        customSnackBar(context, 'Diário criado');
       }
-      widget.onSuccess();
+
+      await notifier.refresh();
     } catch (_) {
       if (mounted) customSnackBar(context, 'Algo deu errado', isError: true);
     } finally {
