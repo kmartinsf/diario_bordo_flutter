@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_input.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
 import 'package:diario_bordo_flutter/providers/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,16 +40,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       );
 
       if (mounted) {
-        log('Conta criada com sucesso!');
         Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {
       if (mounted) {
         final errorMessage = _handleFirebaseError(e);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
-        );
+        customSnackBar(context, errorMessage, isError: true);
       }
     } finally {
       if (mounted) {
