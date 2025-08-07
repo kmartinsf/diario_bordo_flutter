@@ -184,7 +184,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                   ),
                 ),
-
+                const Gap(12),
                 CustomButton(
                   onPressed: _isSaving ? null : () => _saveChanges(user),
                   style: ElevatedButton.styleFrom(
