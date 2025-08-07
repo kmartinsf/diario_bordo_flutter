@@ -9,6 +9,7 @@ class CustomInputWithIcon extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final int maxLines;
+  final int? maxCharacterLength;
 
   const CustomInputWithIcon({
     super.key,
@@ -19,6 +20,7 @@ class CustomInputWithIcon extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.maxLines = 1,
+    this.maxCharacterLength,
   });
 
   @override
@@ -48,6 +50,7 @@ class CustomInputWithIcon extends StatelessWidget {
               validator: validator,
               onChanged: onChanged,
               maxLines: maxLines,
+              maxLength: maxCharacterLength,
               decoration: InputDecoration(
                 hintText: hintText,
                 border: InputBorder.none,
