@@ -1,32 +1,63 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diario_bordo_flutter/data/models/user_model.dart';
+import 'package:diario_bordo_flutter/data/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final AuthRepository _repo = AuthRepository();
 
-  Future<void> register({
+  Future<UserCredential> register({
     required String name,
     required String email,
     required String password,
   }) async {
-    UserCredential result = await _auth.createUserWithEmailAndPassword(
+    final credential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    try {
-      await _firestore.collection('users').doc(result.user!.uid).set({
-        'name': name,
-        'email': email,
-        'createdAt': Timestamp.now(),
-      });
-    } catch (e) {
-      throw Exception('Erro ao criar usuário: $e');
+    final user = credential.user;
+
+    if (user != null) {
+      final userModel = UserModel(
+        id: user.uid,
+        name: name,
+        email: email,
+        city: null,
+        photoUrl: null,
+        createdAt: Timestamp.now(),
+      );
+
+      await _repo.createUser(userModel);
     }
+
+    return credential;
   }
 
   Future<void> login({required String email, required String password}) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    final credential = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    final user = credential.user;
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+
+    if (!doc.exists) {
+      final userModel = UserModel(
+        id: user.uid,
+        name: user.displayName ?? '',
+        email: user.email ?? '',
+        city: null,
+        photoUrl: user.photoURL,
+        createdAt: Timestamp.now(),
+      );
+
+      await AuthRepository().createUser(userModel);
+    }
   }
 }
