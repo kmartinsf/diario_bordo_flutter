@@ -1,5 +1,6 @@
 import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 void customSnackBar(
   BuildContext context,
@@ -29,7 +30,7 @@ void customSnackBar(
             ),
             child: Icon(icon, size: 16, color: iconColor),
           ),
-          const SizedBox(width: 12),
+          Gap(12),
           Expanded(
             child: Text(
               message,

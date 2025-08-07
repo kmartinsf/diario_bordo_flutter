@@ -1,5 +1,6 @@
 import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class CustomInputWithIcon extends StatelessWidget {
   final TextEditingController controller;
@@ -42,7 +43,7 @@ class CustomInputWithIcon extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4),
             child: Icon(icon, size: 20, color: AppColors.grey700),
           ),
-          const SizedBox(width: 8),
+          Gap(8),
           Expanded(
             child: TextFormField(
               controller: controller,

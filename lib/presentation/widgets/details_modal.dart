@@ -3,6 +3,7 @@ import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 void detailsModal(BuildContext context, TravelJournal journal) {
@@ -64,7 +65,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.remove, size: 40, color: AppColors.grey),
-          const SizedBox(height: 8),
+          Gap(8),
           Row(
             children: [
               Container(
@@ -84,7 +85,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              Gap(8),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -101,7 +102,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
                       size: 14,
                       color: AppColors.grey800,
                     ),
-                    const SizedBox(width: 4),
+                    Gap(4),
                     Text(
                       formattedDate,
                       style: const TextStyle(
@@ -114,8 +115,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
               ),
             ],
           ),
-
-          const SizedBox(height: 16),
+          Gap(16),
           Align(
             alignment: Alignment.centerLeft,
             child: Column(
@@ -132,7 +132,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
                   widget.journal.location,
                   style: const TextStyle(color: AppColors.grey),
                 ),
-                const SizedBox(height: 16),
+                Gap(16),
                 Text(
                   'Sobre a viagem'.toUpperCase(),
                   style: const TextStyle(
@@ -140,7 +140,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                Gap(8),
                 Text(
                   widget.journal.description,
                   style: const TextStyle(fontSize: 13),
@@ -150,7 +150,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          Gap(16),
 
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
@@ -189,7 +189,7 @@ class _DetailsModalState extends ConsumerState<DetailsModal> {
                     ),
                   ),
           ),
-          const SizedBox(height: 16),
+          Gap(16),
         ],
       ),
     );

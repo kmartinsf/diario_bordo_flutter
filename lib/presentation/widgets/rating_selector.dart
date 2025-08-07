@@ -1,6 +1,7 @@
 import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gap/gap.dart';
 
 class RatingSelector extends StatelessWidget {
   final double rating;
@@ -24,7 +25,7 @@ class RatingSelector extends StatelessWidget {
       child: Column(
         children: [
           const Text('Nota para a viagem', style: TextStyle(fontSize: 16)),
-          const SizedBox(height: 12),
+          Gap(12),
           RatingBar.builder(
             initialRating: rating,
             minRating: 0,
