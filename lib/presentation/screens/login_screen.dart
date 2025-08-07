@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_input.dart';
 import 'package:diario_bordo_flutter/providers/auth_provider.dart';
@@ -55,7 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final media = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF4E61F6),
+      backgroundColor: AppColors.primary,
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
@@ -64,11 +65,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             left: 24,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: IconButton(
-                icon: const Icon(Icons.chevron_left, color: Color(0xFF383838)),
+                icon: const Icon(Icons.chevron_left, color: AppColors.iconDark),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -92,7 +93,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               'assets/images/rumo.svg',
               width: 115,
               colorFilter: const ColorFilter.mode(
-                Colors.white,
+                AppColors.white,
                 BlendMode.srcIn,
               ),
             ),
@@ -104,7 +105,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             bottom: 0,
             child: Container(
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
               child: SingleChildScrollView(
@@ -170,7 +171,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   _showPassword
                                       ? Icons.visibility_off
                                       : Icons.visibility,
-                                  color: Colors.grey,
+                                  color: AppColors.grey,
                                 ),
                                 onPressed: () => setState(
                                   () => _showPassword = !_showPassword,
@@ -190,7 +191,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               child: CustomButton(
                                 onPressed: isLoading ? null : _login,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF4E61F6),
+                                  backgroundColor: AppColors.primary,
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
@@ -201,7 +202,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 child: isLoading
                                     ? const CircularProgressIndicator(
                                         valueColor: AlwaysStoppedAnimation(
-                                          Colors.white,
+                                          AppColors.white,
                                         ),
                                       )
                                     : const Text(
@@ -209,7 +210,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
-                                          color: Colors.white,
+                                          color: AppColors.white,
                                         ),
                                       ),
                               ),

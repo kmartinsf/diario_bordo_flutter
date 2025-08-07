@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/user_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/confirmation_journal_modal.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
@@ -34,7 +35,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       message: 'Tem certeza que deseja sair?',
       confirmText: 'Sair da minha conta',
       cancelText: 'Permanecer na minha conta',
-      confirmTextColor: Colors.red,
+      confirmTextColor: AppColors.red,
       onConfirm: () async {
         await FirebaseAuth.instance.signOut();
         if (context.mounted) {
@@ -125,7 +126,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: AppColors.grey200,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -157,7 +158,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: AppColors.grey200,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: TextField(
@@ -172,7 +173,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: AppColors.grey200,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: TextField(
@@ -187,7 +188,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 CustomButton(
                   onPressed: _isSaving ? null : () => _saveChanges(user),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4E61F6),
+                    backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -195,13 +196,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                   child: _isSaving
                       ? const CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                          valueColor: AlwaysStoppedAnimation(AppColors.white),
                         )
                       : const Text(
                           'Salvar',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                         ),
                 ),
@@ -209,8 +210,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 CustomButton(
                   onPressed: () => _showLogoutModal(context),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFF4E61F6),
-                    side: const BorderSide(color: Color(0xFF4E61F6)),
+                    foregroundColor: AppColors.primary,
+                    side: const BorderSide(color: AppColors.primary),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

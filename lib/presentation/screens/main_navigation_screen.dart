@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/presentation/screens/home_screen.dart';
 import 'package:diario_bordo_flutter/presentation/screens/profile_screen.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/travel_journal_modal.dart';
@@ -29,8 +30,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withAlpha(50),
+      backgroundColor: AppColors.transparent,
+      barrierColor: AppColors.blackAlpha50,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -52,10 +53,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        color: AppColors.white,
         child: Container(
           decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: Color(0xFFE0E0E0), width: 1)),
+            border: Border(top: BorderSide(color: AppColors.grey300, width: 1)),
           ),
           padding: const EdgeInsets.symmetric(vertical: 4),
           child: Row(
@@ -71,8 +72,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       Icon(
                         Icons.menu_book,
                         color: _selectedIndex == 0
-                            ? const Color(0xFF4E61F6)
-                            : Colors.grey,
+                            ? AppColors.primary
+                            : AppColors.grey,
                       ),
                       const Gap(4),
                       Text(
@@ -81,8 +82,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: _selectedIndex == 0
-                              ? const Color(0xFF4E61F6)
-                              : const Color(0x8A000000),
+                              ? AppColors.primary
+                              : AppColors.grey800,
                         ),
                       ),
                     ],
@@ -96,10 +97,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: const BoxDecoration(
-                      color: Color(0xFFEEF0FF),
+                      color: AppColors.primaryLight,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.add, color: Color(0xFF4E61F6)),
+                    child: const Icon(Icons.add, color: AppColors.primary),
                   ),
                 ),
               ),
@@ -113,8 +114,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       Icon(
                         Icons.person_outline,
                         color: _selectedIndex == 1
-                            ? const Color(0xFF4E61F6)
-                            : Colors.grey,
+                            ? AppColors.primary
+                            : AppColors.grey,
                       ),
                       const Gap(4),
                       Text(
@@ -123,8 +124,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: _selectedIndex == 1
-                              ? const Color(0xFF4E61F6)
-                              : const Color(0x8A000000),
+                              ? AppColors.primary
+                              : AppColors.grey800,
                         ),
                       ),
                     ],

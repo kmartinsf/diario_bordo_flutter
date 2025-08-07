@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 void customSnackBar(
@@ -6,13 +7,13 @@ void customSnackBar(
   bool isError = false,
 }) {
   final icon = isError ? Icons.error : Icons.check_circle;
-  final iconColor = isError ? Color(0xFFFF0000) : Color(0xFF01E17B);
+  final iconColor = isError ? AppColors.red : AppColors.success;
 
   final messenger = ScaffoldMessenger.of(context);
 
   final snackBar = SnackBar(
     behavior: SnackBarBehavior.floating,
-    backgroundColor: const Color(0xFF2E3336),
+    backgroundColor:  AppColors.darkGrey,
     margin: const EdgeInsets.fromLTRB(16, 0, 16, 26),
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -33,7 +34,7 @@ void customSnackBar(
             child: Text(
               message,
               style: const TextStyle(
-                color: Color(0xFFFFFFFF),
+                color: AppColors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),

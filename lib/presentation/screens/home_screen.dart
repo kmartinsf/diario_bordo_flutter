@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/journal_list.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -8,11 +9,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Gap(32),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
@@ -25,8 +26,8 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                'TODOS OS DIÁRIOS',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                'Todos os Diários'.toUpperCase(),
+                style: TextStyle(fontSize: 14, color: AppColors.grey),
               ),
             ),
             Gap(16),

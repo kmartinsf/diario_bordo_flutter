@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.pushNamed(context, '/register');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4E61F6),
+                      backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,
                         vertical: 16,
@@ -40,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color:AppColors.white,
                       ),
                     ),
                   ),
@@ -50,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.pushNamed(context, '/login');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: AppColors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,
                         vertical: 16,
@@ -58,14 +59,14 @@ class WelcomeScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      side: BorderSide(width: 1, color: Color(0xFF4E61F6)),
+                      side: BorderSide(width: 1, color: AppColors.primary),
                     ),
                     child: const Text(
                       'Entrar',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF4E61F6),
+                        color: AppColors.primary,
                       ),
                     ),
                   ),

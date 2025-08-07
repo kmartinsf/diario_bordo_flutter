@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomInput extends StatelessWidget {
@@ -29,9 +30,7 @@ class CustomInput extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hint,
         filled: true,
-        fillColor: hasLoginError
-            ? const Color(0xFFFDECEC)
-            : const Color(0xFFF5F5F5),
+        fillColor: hasLoginError ? AppColors.inputError : AppColors.inputFill,
         errorText: errorText,
         contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4),
         prefix: const Padding(padding: EdgeInsets.only(left: 6)),
@@ -42,11 +41,11 @@ class CustomInput extends StatelessWidget {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.red, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.red, width: 1.5),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.red, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.red, width: 1.5),
         ),
       ),
     );

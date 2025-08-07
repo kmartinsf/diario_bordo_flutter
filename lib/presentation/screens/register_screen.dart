@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_input.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
@@ -80,7 +79,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final formTopHeight = media.height * 0.33;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF4E61F6),
+      backgroundColor: AppColors.primary,
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
@@ -98,7 +97,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     'assets/images/rumo.svg',
                     width: 115,
                     colorFilter: const ColorFilter.mode(
-                      Colors.white,
+                      AppColors.white,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -108,13 +107,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   left: 24,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: IconButton(
                       icon: const Icon(
                         Icons.chevron_left,
-                        color: Color(0xFF383838),
+                        color: AppColors.iconDark,
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -144,7 +143,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: Container(
               padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
               child: SingleChildScrollView(
@@ -218,7 +217,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         child: CustomButton(
                           onPressed: isLoading ? null : _register,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4E61F6),
+                            backgroundColor: AppColors.primary,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -227,7 +226,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           child: isLoading
                               ? const CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation(
-                                    Colors.white,
+                                    AppColors.white,
                                   ),
                                 )
                               : const Text(
@@ -235,7 +234,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                   ),
                                 ),
                         ),

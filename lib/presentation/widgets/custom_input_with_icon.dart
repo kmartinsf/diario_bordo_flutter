@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomInputWithIcon extends StatelessWidget {
@@ -26,21 +27,18 @@ class CustomInputWithIcon extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F4F4),
+        color: AppColors.inputBorder,
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Row(
-        crossAxisAlignment:
-            isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+        crossAxisAlignment: isMultiline
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Icon(
-              icon,
-              size: 20,
-              color: Colors.grey[700],
-            ),
+            child: Icon(icon, size: 20, color: AppColors.grey700),
           ),
           const SizedBox(width: 8),
           Expanded(

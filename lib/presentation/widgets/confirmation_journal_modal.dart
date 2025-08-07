@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -11,13 +12,13 @@ Future<void> confirmationModal({
   required String cancelText,
   required VoidCallback onConfirm,
   VoidCallback? onCancel,
-  Color confirmTextColor = const Color(0xFFFF0000),
+  Color confirmTextColor = AppColors.red,
 }) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    backgroundColor: Colors.transparent,
+    backgroundColor: AppColors.transparent,
     builder: (_) => ConfirmationModal(
       title: title,
       message: message,
@@ -47,7 +48,7 @@ class ConfirmationModal extends StatelessWidget {
     required this.cancelText,
     required this.onConfirm,
     this.onCancel,
-    this.confirmTextColor = const Color(0xFFFF0000),
+    this.confirmTextColor = AppColors.red,
   });
 
   @override
@@ -56,7 +57,7 @@ class ConfirmationModal extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -84,7 +85,7 @@ class ConfirmationModal extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               message,
-              style: const TextStyle(color: Colors.grey, fontSize: 14),
+              style: const TextStyle(color: AppColors.grey, fontSize: 14),
             ),
           ),
           const Gap(30),
@@ -96,7 +97,7 @@ class ConfirmationModal extends StatelessWidget {
                 if (onCancel != null) onCancel!();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4E61F6),
+                backgroundColor: AppColors.primary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -106,7 +107,7 @@ class ConfirmationModal extends StatelessWidget {
                 cancelText,
                 style: const TextStyle(
                   fontSize: 15,
-                  color: Color(0xFFFFFFFF),
+                  color: AppColors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),

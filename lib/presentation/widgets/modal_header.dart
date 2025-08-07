@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ModalHeader extends StatelessWidget {
@@ -18,7 +19,7 @@ class ModalHeader extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
-                color: Colors.black,
+                color: AppColors.black,
               ),
             ),
           ),
@@ -27,7 +28,7 @@ class ModalHeader extends StatelessWidget {
             child: const Text(
               'Cancelar',
               style: TextStyle(
-                color: Color(0xFF4E61F6),
+                color: AppColors.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
               ),

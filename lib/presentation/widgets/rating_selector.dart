@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -16,7 +17,7 @@ class RatingSelector extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F4F4),
+        color: AppColors.inputBorder,
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -33,7 +34,7 @@ class RatingSelector extends StatelessWidget {
             itemSize: 32,
             itemPadding: const EdgeInsets.symmetric(horizontal: 2),
             itemBuilder: (context, _) =>
-                const Icon(Icons.star, color: Colors.amber),
+                const Icon(Icons.star, color: AppColors.yellow),
             onRatingUpdate: onChanged,
           ),
         ],

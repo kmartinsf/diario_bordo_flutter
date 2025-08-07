@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/confirmation_journal_modal.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
@@ -32,8 +33,8 @@ class JournalOptionsMenu extends ConsumerWidget {
               context: context,
               isScrollControlled: true,
               useSafeArea: true,
-              backgroundColor: Colors.transparent,
-              barrierColor: Colors.black.withAlpha(50),
+              backgroundColor: AppColors.transparent,
+              barrierColor: AppColors.blackAlpha50,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
@@ -53,7 +54,7 @@ class JournalOptionsMenu extends ConsumerWidget {
                   'Todas as informações registradas nele serão perdidas de forma definitiva.',
               confirmText: 'Excluir diário',
               cancelText: 'Cancelar',
-              confirmTextColor: Colors.red,
+              confirmTextColor: AppColors.red,
               onConfirm: () async {
                 await ref
                     .read(travelJournalNotifierProvider.notifier)
@@ -75,7 +76,7 @@ class JournalOptionsMenu extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color: AppColors.grey,
               ),
             ),
           ),
@@ -88,7 +89,7 @@ class JournalOptionsMenu extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: Colors.red,
+                color: AppColors.red,
               ),
             ),
           ),

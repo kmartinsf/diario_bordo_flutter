@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_input_with_icon.dart';
-import 'package:diario_bordo_flutter/presentation/widgets/rating_selector.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/rating_selector.dart';
 import 'package:diario_bordo_flutter/providers/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,11 +77,11 @@ class _TravelFormState extends ConsumerState<TravelForm> {
             Container(
               margin: const EdgeInsets.only(top: 6),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: AppColors.blackAlpha10,
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),
@@ -132,7 +133,7 @@ class _TravelFormState extends ConsumerState<TravelForm> {
             child: CustomButton(
               onPressed: widget.isLoading ? null : widget.onSubmit,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4E61F6),
+                backgroundColor: AppColors.primary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -140,14 +141,14 @@ class _TravelFormState extends ConsumerState<TravelForm> {
               ),
               child: widget.isLoading
                   ? const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
+                      valueColor: AlwaysStoppedAnimation(AppColors.white),
                     )
                   : Text(
                       widget.isEditing ? 'Salvar mudanças' : 'Salvar diário',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
             ),

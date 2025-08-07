@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -61,7 +62,7 @@ class _DetailsModalState extends State<DetailsModal> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.remove, size: 40, color: Colors.grey),
+          const Icon(Icons.remove, size: 40, color: AppColors.grey),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -71,14 +72,14 @@ class _DetailsModalState extends State<DetailsModal> {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: AppColors.grey200,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   userName ?? 'Carregando...',
                   style: const TextStyle(
                     fontSize: 12,
-                    color: Color(0x8A000000),
+                    color: AppColors.grey800,
                   ),
                 ),
               ),
@@ -89,7 +90,7 @@ class _DetailsModalState extends State<DetailsModal> {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: AppColors.grey200,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -97,14 +98,14 @@ class _DetailsModalState extends State<DetailsModal> {
                     const Icon(
                       Icons.calendar_today,
                       size: 14,
-                      color: Color(0x8A000000),
+                      color: AppColors.grey800,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       formattedDate,
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Color(0x8A000000),
+                        color: AppColors.grey800,
                       ),
                     ),
                   ],
@@ -128,7 +129,7 @@ class _DetailsModalState extends State<DetailsModal> {
                 ),
                 Text(
                   widget.journal.location,
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: AppColors.grey),
                 ),
                 const SizedBox(height: 16),
                 const Text(
@@ -167,7 +168,7 @@ class _DetailsModalState extends State<DetailsModal> {
                           child: Icon(
                             Icons.broken_image,
                             size: 32,
-                            color: Colors.grey,
+                            color: AppColors.grey,
                           ),
                         ),
                       );
@@ -176,9 +177,9 @@ class _DetailsModalState extends State<DetailsModal> {
                 : Container(
                     height: 150,
                     width: double.infinity,
-                    color: Colors.grey.shade200,
+                    color: AppColors.grey200,
                     child: const Center(
-                      child: Icon(Icons.image, size: 32, color: Colors.grey),
+                      child: Icon(Icons.image, size: 32, color: AppColors.grey),
                     ),
                   ),
           ),

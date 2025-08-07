@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/image_selector.dart';
@@ -142,7 +143,7 @@ class _TravelJournalModalState extends ConsumerState<TravelJournalModal> {
         return ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           child: Material(
-            color: Colors.white,
+            color: AppColors.white,
             child: Column(
               children: [
                 ModalHeader(

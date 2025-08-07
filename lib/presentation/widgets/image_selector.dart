@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CoverImageSection extends StatelessWidget {
@@ -29,7 +30,7 @@ class CoverImageSection extends StatelessWidget {
               : const DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFFB7C5FF), Color(0xFFFFFFFF)],
+                      colors: [AppColors.lightBlue, AppColors.white],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -45,15 +46,15 @@ class CoverImageSection extends StatelessWidget {
               onPressed: onPickImage,
               icon: const Icon(
                 Icons.photo_camera_outlined,
-                color: Colors.white,
+                color: AppColors.white,
                 size: 18,
               ),
               label: const Text(
                 'Escolher uma foto de capa',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.white,),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4E61F6),
+                backgroundColor: AppColors.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

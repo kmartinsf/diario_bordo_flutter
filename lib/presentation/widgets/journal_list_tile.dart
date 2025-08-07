@@ -1,3 +1,4 @@
+import 'package:diario_bordo_flutter/constants/colors.dart';
 import 'package:diario_bordo_flutter/data/models/travel_journal_model.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/journal_options_menu.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class JournalListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: AppColors.grey100,
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
@@ -38,15 +39,18 @@ class JournalListTile extends StatelessWidget {
                   errorBuilder: (context, error, stackTrace) => Container(
                     width: 48,
                     height: 48,
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.broken_image, color: Colors.grey),
+                    color: AppColors.grey300,
+                    child: const Icon(
+                      Icons.broken_image,
+                      color: AppColors.grey,
+                    ),
                   ),
                 )
               : Container(
                   width: 48,
                   height: 48,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.image, color: Colors.grey),
+                  color: AppColors.grey300,
+                  child: const Icon(Icons.image, color: AppColors.grey),
                 ),
         ),
         title: Text(
@@ -55,7 +59,7 @@ class JournalListTile extends StatelessWidget {
         ),
         subtitle: Text(
           journal.location,
-          style: const TextStyle(fontSize: 13, color: Colors.grey),
+          style: const TextStyle(fontSize: 13, color: AppColors.grey),
         ),
         trailing: JournalOptionsMenu(journal: journal, onRefresh: onRefresh),
       ),
