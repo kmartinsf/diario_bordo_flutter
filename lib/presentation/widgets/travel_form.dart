@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_button.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/custom_input_with_icon.dart';
 import 'package:diario_bordo_flutter/presentation/widgets/rating_selector.dart';
-import 'package:diario_bordo_flutter/presentation/widgets/snackbar.dart';
+import 'package:diario_bordo_flutter/presentation/widgets/custom_snackbar.dart';
 import 'package:diario_bordo_flutter/providers/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
