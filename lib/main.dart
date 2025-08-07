@@ -1,4 +1,4 @@
-import 'package:diario_bordo_flutter/presentation/screens/home_screen.dart';
+import 'package:diario_bordo_flutter/presentation/screens/main_navigation_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,8 @@ class TravelJournalApp extends StatelessWidget {
       routes: {
         '/login': (_) => const LoginScreen(),
         '/register': (_) => const RegisterScreen(),
-        '/home': (_) => const HomeScreen(),
+        '/home': (_) => const BottomNavigationScreen(),
+        '/welcome': (_) => const WelcomeScreen(),
       },
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -42,7 +43,7 @@ class TravelJournalApp extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            return const HomeScreen();
+            return const BottomNavigationScreen();
           }
 
           return const WelcomeScreen();
