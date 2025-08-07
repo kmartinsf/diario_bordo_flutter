@@ -70,7 +70,7 @@ lib/
 ### 1. Clone o repositório
 
 ```bash
-git clone (https://github.com/kmartinsf/diario_bordo_flutter.git)
+git clone https://github.com/kmartinsf/diario_bordo_flutter.git
 cd diario-bordo-flutter
 ```
 
