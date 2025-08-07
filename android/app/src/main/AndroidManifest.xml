@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="diario_bordo_flutter"
+        android:label="Diário de Bordo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
